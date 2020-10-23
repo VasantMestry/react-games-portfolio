@@ -1,0 +1,49 @@
+.gitContainer{
+  padding: 5vh;
+  background: #303841;
+  min-height: 80vh;
+}
+
+.inputBox {
+  padding: 1.5vh;
+  width: 20vw;
+  outline: none;
+  border: none;
+}
+
+.submitBtn {
+  margin-left: 3vw;
+  padding: 10px 30px;
+  background: #FCA311;
+  outline: none;
+  border: none;
+  color: #000;
+}
+
+.infoBox {
+  margin-top: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.userWrapper {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.imageWrapper {
+  height: 200px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  color: #e5e5e5;
+}
+
+.imageWrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}

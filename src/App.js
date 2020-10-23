@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './App.css';
 import Homepage from './components/HomePage/HomePage.js'
 import Nav from './components/Nav/Nav.js';
+import Main from './components/GihubSearch/Main.js';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Homepage} />
           <Route path="/todo" exact component={TodoList} />
-          <Route path="/githubsearch" exact />
+          <Route path="/githubsearch" exact component={Main} />
         </Switch>
       </div>
     </Router>
