@@ -11,7 +11,6 @@ function Nav() {
 
   return (
     <nav className="mainNavbar">
-      {/* <h1>Logo</h1> */}
       <ul className="navLinks">
         <Link
           to='/'

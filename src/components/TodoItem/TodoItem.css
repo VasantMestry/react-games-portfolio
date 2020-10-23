@@ -25,12 +25,10 @@
 
 .list li.completed {
 	background: #f6d55c;
-	/* color: #000; */
 }
 
 
 .list li.completed  .dragIcon{
-	/* background: #f6d55c; */
 	color: #000;
 }
 

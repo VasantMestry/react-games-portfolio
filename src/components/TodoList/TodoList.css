@@ -1,31 +1,4 @@
-/*.container {
-	margin-top: 2rem;
-	display: flex;
-	flex-direction: column;
-}
-
-.inputBox {
-	width: 30%;
-	outline: none;
-	border: 1px solid #c2c2c2;
-	height: 30px;
-}
-
-.addBtn{
-	padding: 10px;
-	background: #bada55;
-	outline: none;
-	border: none;
-	margin-left: 20px;
-	cursor: pointer;
-	color: #fff;
-}*/
-
 .container{
-	/* display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column; */
 	background: #303841;
 	min-height: 90vh;
 }
@@ -42,6 +15,7 @@
 	border: none;
 	outline: none;
 	height: 30px;
+	text-align: center;
 }
 
 .addBtn {
