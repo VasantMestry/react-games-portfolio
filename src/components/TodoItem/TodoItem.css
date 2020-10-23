@@ -1,0 +1,98 @@
+.empty {
+	margin-top: 20px;
+	color: #fff;
+}
+.list {
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.list li{
+	padding: 10px;
+	list-style-type: none;
+	border-radius: 5px;
+	min-width: 325px;
+	margin-bottom: 15px;
+	word-wrap: break-word;
+	font-weight: 400;
+	background: rgba(0,0,0,0.3);
+	color: #fff;
+	text-transform: capitalize;
+}
+
+.list li.completed {
+	background: #f6d55c;
+	/* color: #000; */
+}
+
+
+.list li.completed  .dragIcon{
+	/* background: #f6d55c; */
+	color: #000;
+}
+
+.listItems {
+	display: flex;
+	justify-content: space-between;
+}
+
+.listItems.completed input, .listItems.completed .task{
+	text-decoration: line-through;
+	color: #000;
+}
+
+.listItems input {
+	background: transparent;
+	border: none;
+	outline: none;
+	color: #fff;
+}
+
+.listItems .task {
+	text-transform: capitalize;
+}
+
+.icons button{
+	margin: 0px 5px;
+}
+
+.completeBtn {
+	border: none;
+	background: rgba(0,150,0,0.6);
+	outline: none;
+	padding: 5px 10px;
+	color: #fff;
+	cursor: pointer;
+}
+
+.deleteBtn {
+	border: none;
+	background: rgba(255,0,0,0.7);
+	outline: none;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.editBtn {
+	border: none;
+	background: #935900;
+	color: #fff;
+	outline: none;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.checkBoxes {
+	margin-top: 5px;
+}
+
+.dragIcon {
+	cursor: move;
+}
+
+.dragging {
+	opacity: .5;
+}
