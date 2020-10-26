@@ -8,7 +8,7 @@ function HomePage() {
         <h1>Welcome To Vasant's Portfolio</h1>
         <div className="box2">
           <img 
-            src="https://lh3.googleusercontent.com/proxy/pGRcqHv6R2g_OQBgBiHdUz1PYE-WY30A80eDgCm_JwziYAvFUVmw1rv90LXhj8HrziXhMj8lq8EmCN0Ko9_AMINAM6U8I9RX83p2V4N-v80"
+            src="https://i.pinimg.com/originals/1b/33/d6/1b33d6d6f4846be8c04f544b1f7103e7.gif"
           />
         </div>
       </div>

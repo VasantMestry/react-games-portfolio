@@ -30,8 +30,8 @@ function Main() {
       .then(setUser(''))
   }
 
-  console.log(firstUser);
-  console.log(secondUser);
+  // console.log(firstUser);
+  // console.log(secondUser);
 
   return (
     <div className={ModuleCSS.gitContainer}>
