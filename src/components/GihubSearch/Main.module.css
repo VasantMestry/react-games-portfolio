@@ -36,12 +36,28 @@
 
 .getStatsBtn{
   margin-top: 5vh;
-  padding: 10px 30px;
+  padding: 10px 40px;
   background: #FCA311;
   outline: none;
   border: none;
   color: #000;
   cursor: pointer;
+}
+
+
+.winnerBtn{
+  padding: 10px 30px;
+  background: #a9c52f;
+  margin-left: 2vw;
+  outline: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+}
+
+.winnerBtn:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;  
 }
 
 .getStatsBtn:disabled{

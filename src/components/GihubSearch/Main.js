@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import Modal from '../Modal/Modal'
 import ModuleCSS from './Main.module.css'
 
 class Main extends React.Component{
@@ -8,15 +9,29 @@ class Main extends React.Component{
     super(props)
   
     this.state = {
-      user1:null,
-      user2:null,
+      user1: null,
+      user2: null,
       firstUser: {
         user: ''
       },
       secondUser: {
         user: ''
       },
+      show: false,
     }
+  }
+
+  showModal = () =>{
+    console.log("called")
+    this.setState(()=>({
+      show: true,
+    }))
+  }
+
+  closeModal = () => {
+    this.setState(()=>({
+      show: false,
+    }))
   }
 
   submitHandler = (e) =>{
@@ -70,11 +85,50 @@ class Main extends React.Component{
 
   }
 
+  getWinner = () =>{
+
+    const { 
+      firstUser: { 
+        user: fUser, 
+        followers: fFollowers, 
+        repos : fRepos, 
+        events: fEvents
+      }, 
+      
+      secondUser : { 
+        user: sUser, 
+        followers: sFollowers, 
+        repos: sRepos, 
+        events: sEvents
+      },
+      user1, 
+      user2
+    } =  this.state;
+
+    let winner;
+    
+    let firstUserResult = fFollowers.length + fRepos.length + fEvents.length;
+    let secondUserResult = sFollowers.length + sRepos.length + sEvents.length;
+
+    if ((firstUserResult > secondUserResult)){
+      winner = fUser.name ? fUser.name : fUser.login
+    } else if ((secondUserResult > firstUserResult)){
+      winner = sUser.name ? sUser.name : sUser.login
+    } else {
+      winner = "Score Are Equal"
+    }
+    
+    return (
+      <div>
+        <h1>{winner}</h1>
+      </div>
+    )
+  }
+
   render(){
 
-    const { firstUser, secondUser, user1, user2, } =this.state;
+    const { firstUser, secondUser, user1, user2, show } =this.state;
 
-    console.log(firstUser.user)
     return (
       <div className={ModuleCSS.gitContainer}>
         <div
@@ -147,7 +201,26 @@ class Main extends React.Component{
           >
             Get Stats
           </button>
+
+          <button
+            type="submit"
+            name="submit"
+            onClick={this.showModal}
+            className={ModuleCSS.winnerBtn}
+            disabled={!(firstUser.user && secondUser.user)}
+          >
+            Get Winner
+          </button>
         </div>
+
+        { show &&
+          <Modal
+            show={show}
+            closeModal={this.closeModal}
+          >
+            {this.getWinner()}
+          </Modal>
+        }
       </div>
     )
   }
