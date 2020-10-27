@@ -8,12 +8,11 @@ class Main extends React.Component{
     super(props)
   
     this.state = {
-       user: '',
        firstUser: {
-         data: ''
+         user: ''
        },
        secondUser: {
-         data: ''
+         user: ''
        },
     }
   }
@@ -34,22 +33,30 @@ class Main extends React.Component{
       axios.get(`https://api.github.com/users/${secondUser}/events`), // for every activity done
       // axios.get(`https://api.github.com/repos/VasantMestry/react-games-portfolio/commits`) // commits on particular repo
     ])
-      .then(axios.spread((...responses) =>{
-          console.log("Main -> submitHandler -> responses", responses)
-          // this.setState(()=>({
-          //   firstUser: {
-          //     data: first.data,
-          //     commits: firstCommit
-          //   },
-          //   secondUser: {
-          //     data: second.data,
-          //     commits: secondComm
-          //   }
-          // }))
-          // console.log(first);
-          // console.log(second);
-          // console.log(firstCommit);
-          // console.log(secondComm);
+      .then(axios.spread((
+        first,
+        second, 
+        firstFollowers, 
+        secondFollowers,
+        firstRepos,
+        secondRepos,
+        firstEvents,
+        secondEvents
+        ) =>{
+          this.setState(()=>({
+            firstUser: {
+              user: first.data,
+              followers: firstFollowers.data,
+              repos: firstRepos.data,
+              events: firstEvents.data,
+            },
+            secondUser: {
+              user: second.data,
+              followers: secondFollowers.data,
+              repos: secondRepos.data,
+              events: secondEvents.data,
+            }
+          }))
       }))
   }
 
@@ -63,111 +70,80 @@ class Main extends React.Component{
 
   render(){
 
-    const { user, firstUser, secondUser } =this.state;
-
+    const { firstUser, secondUser } =this.state;
 
     return (
       <div className={ModuleCSS.gitContainer}>
-
-        {/* <div
-          className={ModuleCSS.infoBox}
+        <div
+          className={ModuleCSS.cardWrapper}
         >
-          <div className={ModuleCSS.userWrapper}>
-            <div className={ModuleCSS.imageWrapper}>
+
+          <div className={ModuleCSS.card}>
+            <div className={ModuleCSS.cardContent}>
               <img 
-                src={firstUser.avatar_url ? firstUser.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
+                className={ModuleCSS.cardImage}
+                src={firstUser.user ? firstUser.user.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
               />
-              <input
+              <input 
                 type="text"
-                placeholder="Enter User"
+                name='firstUser'
+                className={ModuleCSS.cardInput}
                 onChange={this.changeHandler}
-                name="firstUser"
-                value={firstUser && firstUser.login}
-                className={ModuleCSS.inputBox}
-                />
-              <p>{firstUser.login}</p>
+                placeholder="Enter User"
+              />
+              {firstUser.user && 
+                <p
+                  className={ModuleCSS.userName}
+                >
+                  <span>User Name :</span> {firstUser.user.login} <br/>
+                  <span>Followers :</span> {firstUser.followers.length} <br/>
+                  <span>Repos :</span> {firstUser.repos.length} <br/>
+                  <span>Events :</span> {firstUser.events.length} <br/>
+                </p>
+              }
             </div>
           </div>
-        </div> */}
-            {/* <div className={ModuleCSS.imageWrapper}>
+
+          <div className={ModuleCSS.card}>
+            <div className={ModuleCSS.cardContent}>
               <img 
-                src={secondUser.avatar_url ? secondUser.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
+                className={ModuleCSS.cardImage}
+                src={secondUser.user ? secondUser.user.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
               />
-              <input
+              <input 
                 type="text"
-                placeholder="Enter User"
+                name='secondUser'
+                className={ModuleCSS.cardInput}
                 onChange={this.changeHandler}
-                name="secondUser"
-                value={secondUser && secondUser.login}
-                className={ModuleCSS.inputBox}
-                />
-              <p>{secondUser.login}</p>
-            </div> */}
-
-      <div
-        className={ModuleCSS.cardWrapper}
-      >
-
-        <div className={ModuleCSS.card}>
-          <div className={ModuleCSS.cardContent}>
-            <img 
-              className={ModuleCSS.cardImage}
-              src={firstUser.data ? firstUser.data.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
-            />
-            <input 
-              type="text"
-              name='firstUser'
-              className={ModuleCSS.cardInput}
-              onChange={this.changeHandler}
-              placeholder="Enter User"
-            />
-            {firstUser.data && 
-              <p
-                className={ModuleCSS.userName}
-              >
-                <span>User Name:</span> {firstUser.data.login}
-              </p>
-            }
+                placeholder="Enter User"
+              />
+              {secondUser.user && 
+                <p
+                  className={ModuleCSS.userName}
+                >
+                  <span>User Name:</span> {secondUser.user.login} <br/>
+                  <span>Followers :</span> {secondUser.followers.length} <br/>
+                  <span>Repos :</span> {secondUser.repos.length} <br/>
+                  <span>Events :</span> {secondUser.events.length} <br/>
+                </p>
+              }
+            </div>
           </div>
+
         </div>
 
-        <div className={ModuleCSS.card}>
-          <div className={ModuleCSS.cardContent}>
-            <img 
-              className={ModuleCSS.cardImage}
-              src={secondUser.data ? secondUser.data.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
-            />
-            <input 
-              type="text"
-              name='secondUser'
-              className={ModuleCSS.cardInput}
-              onChange={this.changeHandler}
-              placeholder="Enter User"
-            />
-            {secondUser.data && 
-              <p
-                className={ModuleCSS.userName}
-              >
-                <span>User Name:</span> {secondUser.data.login}
-              </p>
-            }
-          </div>
-        </div>
-
-      </div>
-
-      <div
-        className={ModuleCSS.buttonWrapper}
-      >
-        <button
-          type="submit"
-          name="submit"
-          onClick={this.submitHandler}
-          className={ModuleCSS.getStatsBtn}
+        <div
+          className={ModuleCSS.buttonWrapper}
         >
-          Get Stats
-        </button>
-      </div>
+          <button
+            type="submit"
+            name="submit"
+            onClick={this.submitHandler}
+            className={ModuleCSS.getStatsBtn}
+          >
+            Get Stats
+          </button>
+        </div>
       </div>
     )
   }
