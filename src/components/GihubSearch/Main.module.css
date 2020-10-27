@@ -4,57 +4,6 @@
   min-height: 80vh;
 }
 
-
-
-/* .submitBtn {
-  margin-left: 3vw;
-  padding: 10px 30px;
-  background: #FCA311;
-  outline: none;
-  border: none;
-  color: #000;
-} */
-/* 
-.infoBox {
-  margin-top: 5vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border: 1px solid red;
-}
-
-.userWrapper {
-  width: 80%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.imageWrapper {
-  height: 200px;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #e5e5e5;
-}
-
-.imageWrapper img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
-}
-
-.inputBox {
-  padding: 1.5vh;
-  width: 20vw;
-  outline: none;
-}
-
-.btn {
-  padding:20px;
-} */
-
 .cardWrapper{
   display: flex;
   justify-content: space-between;
@@ -95,10 +44,24 @@
   cursor: pointer;
 }
 
-.userName {
-  color: #fff;
+.getStatsBtn:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.userName span{
+.userStats {
+  color: #fff;
+  margin-top: 2vh;
+  min-width: 195px;
+}
+
+.userStats div {
+  border: .5px dashed #c5c5c5;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.userStats span{
   color: #FCA311;
 }

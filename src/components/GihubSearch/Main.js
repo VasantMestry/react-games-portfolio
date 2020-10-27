@@ -8,29 +8,31 @@ class Main extends React.Component{
     super(props)
   
     this.state = {
-       firstUser: {
-         user: ''
-       },
-       secondUser: {
-         user: ''
-       },
+      user1:null,
+      user2:null,
+      firstUser: {
+        user: ''
+      },
+      secondUser: {
+        user: ''
+      },
     }
   }
 
   submitHandler = (e) =>{
 
-    const { firstUser, secondUser } =  this.state;
+    const { user1, user2 } =  this.state;
 
     e.preventDefault();
     axios.all([
-      axios.get(`https://api.github.com/users/${firstUser}`),
-      axios.get(`https://api.github.com/users/${secondUser}`),  // user info
-      axios.get(`https://api.github.com/users/${firstUser}/followers`),
-      axios.get(`https://api.github.com/users/${secondUser}/followers`), // followers
-      axios.get(`https://api.github.com/users/${firstUser}/repos`),   // list of repos
-      axios.get(`https://api.github.com/users/${secondUser}/repos`),   // list of repos
-      axios.get(`https://api.github.com/users/${firstUser}/events`), // for every activity done
-      axios.get(`https://api.github.com/users/${secondUser}/events`), // for every activity done
+      axios.get(`https://api.github.com/users/${user1}`),
+      axios.get(`https://api.github.com/users/${user2}`),  // user info
+      axios.get(`https://api.github.com/users/${user1}/followers`),
+      axios.get(`https://api.github.com/users/${user2}/followers`), // followers
+      axios.get(`https://api.github.com/users/${user1}/repos`),   // list of repos
+      axios.get(`https://api.github.com/users/${user2}/repos`),   // list of repos
+      axios.get(`https://api.github.com/users/${user1}/events`), // for every activity done
+      axios.get(`https://api.github.com/users/${user2}/events`), // for every activity done
       // axios.get(`https://api.github.com/repos/VasantMestry/react-games-portfolio/commits`) // commits on particular repo
     ])
       .then(axios.spread((
@@ -70,8 +72,9 @@ class Main extends React.Component{
 
   render(){
 
-    const { firstUser, secondUser } =this.state;
+    const { firstUser, secondUser, user1, user2, } =this.state;
 
+    console.log(firstUser.user)
     return (
       <div className={ModuleCSS.gitContainer}>
         <div
@@ -86,20 +89,20 @@ class Main extends React.Component{
               />
               <input 
                 type="text"
-                name='firstUser'
+                name='user1'
                 className={ModuleCSS.cardInput}
                 onChange={this.changeHandler}
                 placeholder="Enter User"
               />
               {firstUser.user && 
-                <p
-                  className={ModuleCSS.userName}
+                <div
+                  className={ModuleCSS.userStats}
                 >
-                  <span>User Name :</span> {firstUser.user.login} <br/>
-                  <span>Followers :</span> {firstUser.followers.length} <br/>
-                  <span>Repos :</span> {firstUser.repos.length} <br/>
-                  <span>Events :</span> {firstUser.events.length} <br/>
-                </p>
+                  <div><span>User Name :</span> {firstUser.user.login}</div> <br/>
+                  <div><span>Followers :</span> {firstUser.followers.length}</div> <br/>
+                  <div><span>Repos :</span> {firstUser.repos.length}</div> <br/>
+                  <div><span>Events :</span> {firstUser.events.length}</div> <br/>
+                </div>
               }
             </div>
           </div>
@@ -112,20 +115,20 @@ class Main extends React.Component{
               />
               <input 
                 type="text"
-                name='secondUser'
+                name='user2'
                 className={ModuleCSS.cardInput}
                 onChange={this.changeHandler}
                 placeholder="Enter User"
               />
               {secondUser.user && 
-                <p
-                  className={ModuleCSS.userName}
+                <div
+                  className={ModuleCSS.userStats}
                 >
-                  <span>User Name:</span> {secondUser.user.login} <br/>
-                  <span>Followers :</span> {secondUser.followers.length} <br/>
-                  <span>Repos :</span> {secondUser.repos.length} <br/>
-                  <span>Events :</span> {secondUser.events.length} <br/>
-                </p>
+                  <div><span>User Name :</span> {secondUser.user.login}</div> <br/>
+                  <div><span>Followers :</span> {secondUser.followers.length}</div> <br/>
+                  <div><span>Repos :</span> {secondUser.repos.length}</div> <br/>
+                  <div><span>Events :</span> {secondUser.events.length}</div> <br/>
+                </div>
               }
             </div>
           </div>
@@ -140,6 +143,7 @@ class Main extends React.Component{
             name="submit"
             onClick={this.submitHandler}
             className={ModuleCSS.getStatsBtn}
+            disabled={!(user1 && user2)}
           >
             Get Stats
           </button>
