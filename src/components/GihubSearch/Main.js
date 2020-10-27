@@ -1,81 +1,176 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import axios from 'axios'
 import ModuleCSS from './Main.module.css'
 
-function Main() {
+class Main extends React.Component{
 
-  const [ user, setUser ] = useState('');
-  const [ firstUser, setFirstUser ] = useState('');
-  const [ secondUser, setSecondUser ] = useState('');
-
-  // useEffect(()=>{
-  //   axios('https://api.github.com/users/vasantmestry11')
-  //     .then((res)=> setUser(res.data))
-  // }, [])
-
-  const inputHandler = (e) =>{
-    setUser(e.target.value)
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       user: '',
+       firstUser: {
+         data: ''
+       },
+       secondUser: {
+         data: ''
+       },
+    }
   }
 
-  const submitHandler = (e) =>{
+  submitHandler = (e) =>{
+
+    const { firstUser, secondUser } =  this.state;
+
     e.preventDefault();
     axios.all([
-      axios.get(`https://api.github.com/users/${user}`),
-      axios.get(`https://api.github.com/users/vasantmestry11`),
+      axios.get(`https://api.github.com/users/${firstUser}`),
+      axios.get(`https://api.github.com/users/${secondUser}`),  // user info
+      axios.get(`https://api.github.com/users/${firstUser}/followers`),
+      axios.get(`https://api.github.com/users/${secondUser}/followers`), // followers
+      axios.get(`https://api.github.com/users/${firstUser}/repos`),   // list of repos
+      axios.get(`https://api.github.com/users/${secondUser}/repos`),   // list of repos
+      axios.get(`https://api.github.com/users/${firstUser}/events`), // for every activity done
+      axios.get(`https://api.github.com/users/${secondUser}/events`), // for every activity done
+      // axios.get(`https://api.github.com/repos/VasantMestry/react-games-portfolio/commits`) // commits on particular repo
     ])
-      .then(axios.spread((firstUser, secondUser) =>{
-          setFirstUser(firstUser.data);
-          setSecondUser(secondUser.data);
+      .then(axios.spread((...responses) =>{
+          console.log("Main -> submitHandler -> responses", responses)
+          // this.setState(()=>({
+          //   firstUser: {
+          //     data: first.data,
+          //     commits: firstCommit
+          //   },
+          //   secondUser: {
+          //     data: second.data,
+          //     commits: secondComm
+          //   }
+          // }))
+          // console.log(first);
+          // console.log(second);
+          // console.log(firstCommit);
+          // console.log(secondComm);
       }))
-      .then(setUser(''))
   }
 
-  // console.log(firstUser);
-  // console.log(secondUser);
+  changeHandler = (e)=>{
 
-  return (
-    <div className={ModuleCSS.gitContainer}>
-      <div className={ModuleCSS.header}>
-        <form onSubmit={submitHandler}>
-          <input
-            type="text"
-            placeholder="Enter User"
-            onChange={inputHandler}
-            name="user"
-            value={user && user.name}
-            className={ModuleCSS.inputBox}
-          />
-          <input 
-            type="submit"
-            name="submit"
-            className={ModuleCSS.submitBtn}
-          />
-        </form>
-      </div>
+    this.setState(()=> ({
+      [e.target.name]: e.target.value
+    }))
+
+  }
+
+  render(){
+
+    const { user, firstUser, secondUser } =this.state;
+
+
+    return (
+      <div className={ModuleCSS.gitContainer}>
+
+        {/* <div
+          className={ModuleCSS.infoBox}
+        >
+          <div className={ModuleCSS.userWrapper}>
+            <div className={ModuleCSS.imageWrapper}>
+              <img 
+                src={firstUser.avatar_url ? firstUser.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
+              />
+              <input
+                type="text"
+                placeholder="Enter User"
+                onChange={this.changeHandler}
+                name="firstUser"
+                value={firstUser && firstUser.login}
+                className={ModuleCSS.inputBox}
+                />
+              <p>{firstUser.login}</p>
+            </div>
+          </div>
+        </div> */}
+            {/* <div className={ModuleCSS.imageWrapper}>
+              <img 
+                src={secondUser.avatar_url ? secondUser.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
+              />
+              <input
+                type="text"
+                placeholder="Enter User"
+                onChange={this.changeHandler}
+                name="secondUser"
+                value={secondUser && secondUser.login}
+                className={ModuleCSS.inputBox}
+                />
+              <p>{secondUser.login}</p>
+            </div> */}
+
       <div
-        className={ModuleCSS.infoBox}
+        className={ModuleCSS.cardWrapper}
       >
-        <div className={ModuleCSS.userWrapper}>
 
-          <div className={ModuleCSS.imageWrapper}>
+        <div className={ModuleCSS.card}>
+          <div className={ModuleCSS.cardContent}>
             <img 
-              src={firstUser.avatar_url ? firstUser.avatar_url : 'https://assets.stickpng.com/thumbs/5af573836554160a79bea074.png'}
+              className={ModuleCSS.cardImage}
+              src={firstUser.data ? firstUser.data.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
             />
-            <p>{firstUser.name}</p>
+            <input 
+              type="text"
+              name='firstUser'
+              className={ModuleCSS.cardInput}
+              onChange={this.changeHandler}
+              placeholder="Enter User"
+            />
+            {firstUser.data && 
+              <p
+                className={ModuleCSS.userName}
+              >
+                <span>User Name:</span> {firstUser.data.login}
+              </p>
+            }
           </div>
+        </div>
 
-          <div className={ModuleCSS.imageWrapper}>
+        <div className={ModuleCSS.card}>
+          <div className={ModuleCSS.cardContent}>
             <img 
-              src={secondUser.avatar_url ? secondUser.avatar_url : 'https://assets.stickpng.com/thumbs/5af573836554160a79bea074.png'}
+              className={ModuleCSS.cardImage}
+              src={secondUser.data ? secondUser.data.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
             />
-            <p>{secondUser.name}</p>
+            <input 
+              type="text"
+              name='secondUser'
+              className={ModuleCSS.cardInput}
+              onChange={this.changeHandler}
+              placeholder="Enter User"
+            />
+            {secondUser.data && 
+              <p
+                className={ModuleCSS.userName}
+              >
+                <span>User Name:</span> {secondUser.data.login}
+              </p>
+            }
           </div>
-
         </div>
 
       </div>
-    </div>
-  )
+
+      <div
+        className={ModuleCSS.buttonWrapper}
+      >
+        <button
+          type="submit"
+          name="submit"
+          onClick={this.submitHandler}
+          className={ModuleCSS.getStatsBtn}
+        >
+          Get Stats
+        </button>
+      </div>
+      </div>
+    )
+  }
 }
 
 export default Main
