@@ -9,31 +9,6 @@
   justify-content: space-between;
 }
 
-.card{
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.cardContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.cardImage {
-  max-width: 35%;
-  object-fit: scale-down;
-}
-
-.cardContent input {
-  margin-top: 5vh;
-  box-sizing: border-box;
-  padding: 10px;
-  outline: none;
-  border: none;
-}
-
 .getStatsBtn{
   margin-top: 5vh;
   padding: 10px 40px;
@@ -65,19 +40,3 @@
   cursor: not-allowed;
 }
 
-.userStats {
-  color: #fff;
-  margin-top: 2vh;
-  min-width: 195px;
-}
-
-.userStats div {
-  border: .5px dashed #c5c5c5;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-}
-
-.userStats span{
-  color: #FCA311;
-}

@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import Modal from '../Modal/Modal'
+import UserCard from '../UserCard/UserCard'
 import ModuleCSS from './Main.module.css'
 
 class Main extends React.Component{
@@ -22,7 +23,6 @@ class Main extends React.Component{
   }
 
   showModal = () =>{
-    console.log("called")
     this.setState(()=>({
       show: true,
     }))
@@ -148,61 +148,20 @@ class Main extends React.Component{
         <div
           className={ModuleCSS.cardWrapper}
         >
+          <UserCard 
+            firstUser={firstUser}
+            user={user1}
+            name='user1'
+            changeHandler={this.changeHandler}
+          />
 
-          <div className={ModuleCSS.card}>
-            <div className={ModuleCSS.cardContent}>
-              <img 
-                className={ModuleCSS.cardImage}
-                src={firstUser.user ? firstUser.user.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
-              />
-              <input 
-                type="text"
-                name='user1'
-                className={ModuleCSS.cardInput}
-                onChange={this.changeHandler}
-                placeholder="Enter User"
-                value={user1}
-              />
-              {firstUser.user && 
-                <div
-                  className={ModuleCSS.userStats}
-                >
-                  <div><span>User Name :</span> {firstUser.user.login}</div> <br/>
-                  <div><span>Followers :</span> {firstUser.followers.length}</div> <br/>
-                  <div><span>Repos :</span> {firstUser.repos.length}</div> <br/>
-                  <div><span>Events :</span> {firstUser.events.length}</div> <br/>
-                </div>
-              }
-            </div>
-          </div>
-
-          <div className={ModuleCSS.card}>
-            <div className={ModuleCSS.cardContent}>
-              <img 
-                className={ModuleCSS.cardImage}
-                src={secondUser.user ? secondUser.user.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
-              />
-              <input 
-                type="text"
-                name='user2'
-                className={ModuleCSS.cardInput}
-                onChange={this.changeHandler}
-                placeholder="Enter User"
-                value={user2}
-              />
-              {secondUser.user && 
-                <div
-                  className={ModuleCSS.userStats}
-                >
-                  <div><span>User Name :</span> {secondUser.user.login}</div> <br/>
-                  <div><span>Followers :</span> {secondUser.followers.length}</div> <br/>
-                  <div><span>Repos :</span> {secondUser.repos.length}</div> <br/>
-                  <div><span>Events :</span> {secondUser.events.length}</div> <br/>
-                </div>
-              }
-            </div>
-          </div>
-
+          <UserCard 
+            firstUser={secondUser}
+            name='user2'
+            user={user2}
+            changeHandler={this.changeHandler}
+          />
+                    
         </div>
 
         <div
