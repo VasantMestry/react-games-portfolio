@@ -85,6 +85,22 @@ class Main extends React.Component{
 
   }
 
+  playAgain = () => {
+
+    this.setState(()=> ({
+      user1: '',
+      user2: '',
+      firstUser: {
+        user: ''
+      },
+      secondUser: {
+        user: ''
+      },
+      show: false,
+    }))
+
+  }
+
   getWinner = () =>{
 
     const { 
@@ -101,8 +117,6 @@ class Main extends React.Component{
         repos: sRepos, 
         events: sEvents
       },
-      user1, 
-      user2
     } =  this.state;
 
     let winner;
@@ -147,6 +161,7 @@ class Main extends React.Component{
                 className={ModuleCSS.cardInput}
                 onChange={this.changeHandler}
                 placeholder="Enter User"
+                value={user1}
               />
               {firstUser.user && 
                 <div
@@ -173,6 +188,7 @@ class Main extends React.Component{
                 className={ModuleCSS.cardInput}
                 onChange={this.changeHandler}
                 placeholder="Enter User"
+                value={user2}
               />
               {secondUser.user && 
                 <div
@@ -217,6 +233,7 @@ class Main extends React.Component{
           <Modal
             show={show}
             closeModal={this.closeModal}
+            playAgain={this.playAgain}
           >
             {this.getWinner()}
           </Modal>

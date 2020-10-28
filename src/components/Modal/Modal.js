@@ -3,6 +3,7 @@ import ModuleCSS from './Modal.module.css'
 
 function Modal({
   closeModal,
+  playAgain,
   show,
   children,
 }) {
@@ -26,9 +27,9 @@ function Modal({
         </button>
         <button
           className={ModuleCSS.restartBtn}
-          onClick={closeModal}
+          onClick={playAgain}
         >
-          Restart
+          Play Again
         </button>
       </section>
     </div>
