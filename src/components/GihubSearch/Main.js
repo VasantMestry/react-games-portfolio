@@ -3,6 +3,7 @@ import axios from 'axios'
 import Modal from '../Modal/Modal'
 import UserCard from '../UserCard/UserCard'
 import ModuleCSS from './Main.module.css'
+import { debounce } from 'lodash'
 
 class Main extends React.Component{
 
@@ -10,8 +11,8 @@ class Main extends React.Component{
     super(props)
   
     this.state = {
-      user1: null,
-      user2: null,
+      user1: '',
+      user2: '',
       firstUser: {
         user: ''
       },
@@ -34,54 +35,67 @@ class Main extends React.Component{
     }))
   }
 
-  submitHandler = (e) =>{
+  // debounce = (fn, delay) => {
+  //   let timer;
+  //   return ()=>{
+  //     clearTimeout(timer);
+  //     timer = setTimeout(()=>{
+  //       fn();
+  //     }, delay)
+  //   }
+  // }
+
+  submitHandler = debounce(() =>{
+    console.log("here")
 
     const { user1, user2 } =  this.state;
 
-    e.preventDefault();
+    // axios.get(`https://api.github.com/users/${user1}`)
+    //   .then(res=>{
+    //     console.log(res.data)
+    //   })
+
+    // e.preventDefault();
     axios.all([
       axios.get(`https://api.github.com/users/${user1}`),
-      axios.get(`https://api.github.com/users/${user2}`),  // user info
-      axios.get(`https://api.github.com/users/${user1}/followers`),
-      axios.get(`https://api.github.com/users/${user2}/followers`), // followers
-      axios.get(`https://api.github.com/users/${user1}/repos`),   // list of repos
-      axios.get(`https://api.github.com/users/${user2}/repos`),   // list of repos
-      axios.get(`https://api.github.com/users/${user1}/events`), // for every activity done
-      axios.get(`https://api.github.com/users/${user2}/events`), // for every activity done
+      axios.get(`https://api.github.com/users/${user2}`),
+      // axios.get(`https://api.github.com/users/${user1}/followers`),
+      // axios.get(`https://api.github.com/users/${user1}/repos`),   // list of repos
+      // axios.get(`https://api.github.com/users/${user1}/events`), // for every activity done
       // axios.get(`https://api.github.com/repos/VasantMestry/react-games-portfolio/commits`) // commits on particular repo
     ])
       .then(axios.spread((
         first,
-        second, 
-        firstFollowers, 
-        secondFollowers,
-        firstRepos,
-        secondRepos,
-        firstEvents,
-        secondEvents
+        second
+        // firstFollowers, 
+        // firstRepos,
+        // firstEvents,
         ) =>{
           this.setState(()=>({
             firstUser: {
               user: first.data,
-              followers: firstFollowers.data,
-              repos: firstRepos.data,
-              events: firstEvents.data,
+              // followers: firstFollowers.data,
+              // repos: firstRepos.data,
+              // events: firstEvents.data,
             },
             secondUser: {
               user: second.data,
-              followers: secondFollowers.data,
-              repos: secondRepos.data,
-              events: secondEvents.data,
+              // followers: secondFollowers.data,
+              // repos: secondRepos.data,
+              // events: secondEvents.data,
             }
           }))
       }))
-  }
+  
+  }, 2000);
 
   changeHandler = (e)=>{
 
     this.setState(()=> ({
       [e.target.name]: e.target.value
-    }))
+    }),
+      ()=> this.submitHandler()
+    )
 
   }
 
@@ -164,19 +178,9 @@ class Main extends React.Component{
                     
         </div>
 
-        <div
+        {/* <div
           className={ModuleCSS.buttonWrapper}
         >
-          <button
-            type="submit"
-            name="submit"
-            onClick={this.submitHandler}
-            className={ModuleCSS.getStatsBtn}
-            disabled={!(user1 && user2)}
-          >
-            Get Stats
-          </button>
-
           <button
             type="submit"
             name="submit"
@@ -186,9 +190,9 @@ class Main extends React.Component{
           >
             Get Winner
           </button>
-        </div>
+        </div> */}
 
-        { show &&
+        {/* { show &&
           <Modal
             show={show}
             closeModal={this.closeModal}
@@ -196,7 +200,7 @@ class Main extends React.Component{
           >
             {this.getWinner()}
           </Modal>
-        }
+        } */}
       </div>
     )
   }

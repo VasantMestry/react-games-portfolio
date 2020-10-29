@@ -4,7 +4,7 @@ import ModuleCSS from './UserCard.module.css'
 function UserCard(props) {
 
 
-  const { 
+  const {
     firstUser,
     user,
     name,
@@ -14,11 +14,11 @@ function UserCard(props) {
   return (
     <div className={ModuleCSS.card}>
       <div className={ModuleCSS.cardContent}>
-        <img 
+        <img
           className={ModuleCSS.cardImage}
           src={firstUser.user ? firstUser.user.avatar_url : 'https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png'}
         />
-        <input 
+        <input
           type="text"
           name={name}
           className={ModuleCSS.cardInput}
@@ -26,14 +26,14 @@ function UserCard(props) {
           placeholder="Enter User"
           value={user}
         />
-        {firstUser.user && 
+        {firstUser.user &&
           <div
             className={ModuleCSS.userStats}
           >
-            <div><span>User Name :</span> {firstUser.user.login}</div> <br/>
-            <div><span>Followers :</span> {firstUser.followers.length}</div> <br/>
+            <div><span>User Name :</span> {firstUser.user.login}</div> <br />
+            {/* <div><span>Followers :</span> {firstUser.followers.length}</div> <br/>
             <div><span>Repos :</span> {firstUser.repos.length}</div> <br/>
-            <div><span>Events :</span> {firstUser.events.length}</div> <br/>
+            <div><span>Events :</span> {firstUser.events.length}</div> <br/> */}
           </div>
         }
       </div>
