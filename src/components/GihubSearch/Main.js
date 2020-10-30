@@ -11,8 +11,8 @@ class Main extends React.Component{
     super(props)
   
     this.state = {
-      user1: '',
-      user2: '',
+      first: '',
+      second: '',
       firstUser: {
         user: ''
       },
@@ -35,66 +35,52 @@ class Main extends React.Component{
     }))
   }
 
-  // debounce = (fn, delay) => {
-  //   let timer;
-  //   return ()=>{
-  //     clearTimeout(timer);
-  //     timer = setTimeout(()=>{
-  //       fn();
-  //     }, delay)
-  //   }
-  // }
+  submitHandler = debounce((name, value) =>{
 
-  submitHandler = debounce(() =>{
-    console.log("here")
+    if (value === '') return null;
 
-    const { user1, user2 } =  this.state;
-
-    // axios.get(`https://api.github.com/users/${user1}`)
-    //   .then(res=>{
-    //     console.log(res.data)
-    //   })
-
-    // e.preventDefault();
-    axios.all([
-      axios.get(`https://api.github.com/users/${user1}`),
-      axios.get(`https://api.github.com/users/${user2}`),
-      // axios.get(`https://api.github.com/users/${user1}/followers`),
-      // axios.get(`https://api.github.com/users/${user1}/repos`),   // list of repos
-      // axios.get(`https://api.github.com/users/${user1}/events`), // for every activity done
+    const apiCallUrls = [
+      axios.get(`https://api.github.com/users/${value}`),
+      axios.get(`https://api.github.com/users/${value}/followers`),
+      axios.get(`https://api.github.com/users/${value}/repos`),   // list of repos
+      axios.get(`https://api.github.com/users/${value}/events`), // for every activity done
       // axios.get(`https://api.github.com/repos/VasantMestry/react-games-portfolio/commits`) // commits on particular repo
-    ])
-      .then(axios.spread((
-        first,
-        second
-        // firstFollowers, 
-        // firstRepos,
-        // firstEvents,
-        ) =>{
-          this.setState(()=>({
-            firstUser: {
-              user: first.data,
-              // followers: firstFollowers.data,
-              // repos: firstRepos.data,
-              // events: firstEvents.data,
-            },
-            secondUser: {
-              user: second.data,
-              // followers: secondFollowers.data,
-              // repos: secondRepos.data,
-              // events: secondEvents.data,
-            }
-          }))
+    ]
+
+    axios.all([...apiCallUrls])
+    .then(axios.spread((
+      userInfo,
+      userFollowers, 
+      userRepos,
+      userEvents,
+      ) =>{
+        this.setState(()=>({
+          [`${name}User`]: {
+            user: userInfo.data,
+            followers: userFollowers.data,
+            repos: userRepos.data,
+            events: userEvents.data,
+          },
+        }))
+    }))
+    .catch(()=>{
+      this.setState(()=>({
+        [`${name}User`]: {
+          user: {
+            avatar_url: 'https://i.pinimg.com/originals/34/bf/46/34bf463e47ec1ae480f8f61704a63a42.gif'
+          }
+        },
       }))
+    })
   
-  }, 2000);
+  }, 1000);
 
   changeHandler = (e)=>{
 
     this.setState(()=> ({
       [e.target.name]: e.target.value
     }),
-      ()=> this.submitHandler()
+      ()=> this.submitHandler(e.target.name, e.target.value)
     )
 
   }
@@ -102,8 +88,8 @@ class Main extends React.Component{
   playAgain = () => {
 
     this.setState(()=> ({
-      user1: '',
-      user2: '',
+      first: '',
+      second: '',
       firstUser: {
         user: ''
       },
@@ -155,7 +141,7 @@ class Main extends React.Component{
 
   render(){
 
-    const { firstUser, secondUser, user1, user2, show } =this.state;
+    const { firstUser, secondUser, first, second, show } =this.state;
 
     return (
       <div className={ModuleCSS.gitContainer}>
@@ -164,15 +150,15 @@ class Main extends React.Component{
         >
           <UserCard 
             firstUser={firstUser}
-            user={user1}
-            name='user1'
+            user={first}
+            name='first'
             changeHandler={this.changeHandler}
           />
 
           <UserCard 
             firstUser={secondUser}
-            name='user2'
-            user={user2}
+            name='second'
+            user={second}
             changeHandler={this.changeHandler}
           />
                     
@@ -190,9 +176,9 @@ class Main extends React.Component{
           >
             Get Winner
           </button>
-        </div> */}
+        </div>
 
-        {/* { show &&
+        { show &&
           <Modal
             show={show}
             closeModal={this.closeModal}

@@ -6,6 +6,17 @@ import Homepage from './components/HomePage/HomePage.js'
 import Nav from './components/Nav/Nav.js';
 import Main from './components/GihubSearch/Main.js';
 
+
+  // debounce = (fn, delay) => {
+  //   let timer;
+  //   return ()=>{
+  //     clearTimeout(timer);
+  //     timer = setTimeout(()=>{
+  //       fn();
+  //     }, delay)
+  //   }
+  // }
+
 function App() {
   return (
     <Router>
