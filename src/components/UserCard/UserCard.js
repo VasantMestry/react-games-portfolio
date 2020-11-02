@@ -31,9 +31,9 @@ function UserCard(props) {
             className={ModuleCSS.userStats}
           >
             <div><span>User Name :</span> {firstUser.user.login}</div> <br />
-            <div><span>Followers :</span> {firstUser.followers.length}</div> <br/>
+            {/* <div><span>Followers :</span> {firstUser.followers.length}</div> <br/>
             <div><span>Repos :</span> {firstUser.repos.length}</div> <br/>
-            <div><span>Events :</span> {firstUser.events.length}</div> <br/>
+            <div><span>Events :</span> {firstUser.events.length}</div> <br/> */}
           </div>
         }
       </div>
