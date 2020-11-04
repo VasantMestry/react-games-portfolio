@@ -30,8 +30,8 @@ function Test() {
     
     getData()
     return ()=>{
-      // console.log('unmounting')
-      // console.log(source.cancel())
+      console.log('unmounting')
+      console.log(source.cancel())
     }
 
   }, 2000), [])

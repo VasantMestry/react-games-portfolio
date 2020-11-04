@@ -40,15 +40,21 @@ class Main extends React.Component {
 
     if (value === "") return null;
 
-    if(typeof this.cancelToken !== typeof undefined){
+    console.log(typeof Object)
+    // if(this.cancelToken !== undefined){
+    //   console.log("checked")
+    //   this.cancelToken.cancel()
+    // }
+
+    if(typeof this.cancelToken === typeof Object){
       console.log("checked")
-      this.cancelToken.cancel("Operation canceled")
+      return ()=>this.cancelToken.cancel()
     }
-
+    
     console.log("not checked")
-
+    
     this.cancelToken = axios.CancelToken.source();
-
+      
     const apiCallUrls = [
       axios.get(`https://api.github.com/users/${value}`, {
         cancelToken: this.cancelToken.token,
@@ -87,7 +93,7 @@ class Main extends React.Component {
         }));
       });
 
-  }, 3000);
+  }, 700);
 
   changeHandler = (e) => {   
     // source.cancel && source.cancel();
@@ -171,12 +177,18 @@ class Main extends React.Component {
             changeHandler={this.changeHandler}
           />
 
-          <UserCard
+          <button
+            onClick={()=>this.cancelToken.cancel()}
+            >
+              Create
+            </button>
+
+          {/* <UserCard
             firstUser={secondUser}
             name="second"
             user={second}
             changeHandler={this.changeHandler}
-          />
+          /> */}
 
           {/* <Test /> */}
         </div>
